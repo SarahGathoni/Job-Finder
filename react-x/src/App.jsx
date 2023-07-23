@@ -16,6 +16,7 @@ function App() {
       <About />
       <Contact/>
       <Work />
+      <div className='h-[4000px]'></div>
     </div>
   )
 }
