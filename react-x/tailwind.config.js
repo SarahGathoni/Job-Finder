@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{js,jsx,tsx,ts}'],
+  content: [
+    "./index.html",
+    './src/**/*.{js,jsx,tsx,ts}'
+],
   theme: {
     fontFamily:{
       primary: 'Obitron',
@@ -22,7 +25,9 @@ export default {
     extend: {
       colors: {
         primary: '#0a0a0a',
-        accent: '#8809C3'
+        accent: '#8809C3',
+        customPurple: '#591DA9',
+        customPurpleTwo: '#051960'
       }
     },
   },
