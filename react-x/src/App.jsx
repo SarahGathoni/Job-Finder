@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './components/Header';
 import Nav from './components/Nav';
 import About from './components/About';
 import Contact from './components/contact';
@@ -13,7 +12,7 @@ function App() {
   return (
     <div className='bg-white bg-no-repeat bg-cover overflow-hidden'>
       <Router>
-        <Header />
+        
         <Nav />
         <Routes>
           {/* Define the route for the Work component */}
