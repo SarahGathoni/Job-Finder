@@ -20,13 +20,22 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors(corsOptions));
 
-// Routes
-//app.use("/", require("./routes/routes"));
+// app.use((err: any, req: any, res: any, next: any) => {
+//   console.error(err.stack);
+//   res.status(500).json({
+//       error: 'Internal Server Error'
+//   });
+// });
 
+
+// Routes
+app.use("/", require("./routes/routes"));
 // Listening for requests
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
 });
+
+  
 

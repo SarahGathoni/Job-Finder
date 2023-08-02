@@ -1,44 +1,58 @@
-// const main = async () => {
+import * as express from 'express';
+import puppeteer from "puppeteer"
+import { scrappingData } from '../scrapping/scrapping';
+const router = express.Router();
+
+//home route
+router.get("/", async (req: any, res: any) => {
+    try {
+        res.send("Welcome to FinderJobs api huraay🚀🚀🚀");
+
+    } catch (error) {
+        console.log("Unable to connect to home route", error)
+    }
+});
+
+//route to get the data from our database
+// router.get("/retrived-data", async (req: any, res: any) => {
 //     try {
+//         const { data } = req.body
+//         //email and password
+//         //querry the database to find a collection for scrapeddata
+//         const allData = await ScrapedData.find({ data });
 
-//         const browser = await puppeteer.launch({ headless: false });
-//         const page = await browser.newPage();
-//         // Navigate the page to a URL
-//         await page.goto('https://developer.chrome.com/');
+//         res.send({ message: "successfully retrieved the data", data: data })
 
-//         // Set screen size
-//         await page.setViewport({ width: 1080, height: 1024 });
-
-//         // Type into search box
-//         await page.type('.search-box__input', 'whats new in devtools chrome 105');
-
-//         // Wait and click on first result
-//         const searchResultSelector = '.search-box__result';
-//         await page.waitForSelector(searchResultSelector);
-//         await page.click(searchResultSelector);
-
-//         // Locate the full title with a unique string
-//         const textSelector = await page.waitForSelector(
-//             'text/Customize and automate'
-//         );
-
-//         await page.waitForNavigation({ waitUntil: "domcontentloaded" })
-
-//         console.log("Heey we got here");
-
-//         const fullTitle = await textSelector?.evaluate(el => el.textContent);
-
-//         // Print the full title
-//         console.log('The title of this blog post is "%s".', fullTitle);
-
-//         //save this data on a database
-
-//         await browser.close();
 
 
 //     } catch (error) {
-//         console.log("Unable to scrape data", error)
+//         console.log("Unable to retrived-data", error)
 //     }
-// }
+// });
 
-// main()
+//route to post/save data to our database
+// router.post("/scrape-data", async (req: any, res: any) => {
+//     try {
+
+//         //got the scraped data frpm pupeeter
+//         let scrape = await scrappingData()
+//         scrape = req.body
+//         //check if there is data in scrape
+//         if (scrape) {
+             
+//             const saveData = new ScrapedData({
+//                 scrape,
+//             }).save()
+
+//             res.send({
+//                 message: "successfully save to db"
+//             })
+//         }
+
+//     } catch (error) {
+//         console.log("Unable to scrape-data", error)
+//     }
+// })
+
+
+module.exports = router;
