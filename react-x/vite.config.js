@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
 
   define: {
-    'process.env.API_KEY': JSON.stringify(process.env.OPENAI_API_KEY),
+    'process.env.API_KEY': JSON.stringify(process.env.VITEyy_OPENAI_API_KEY),
   },
 })
