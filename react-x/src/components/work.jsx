@@ -8,22 +8,13 @@ import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { RetrievalQAChain } from "langchain/chains";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 
-
-
-
-
-
 export default function Work() {
   const [res, setRes] = useState('');
 
-  
-  
   const openai = async () => {
     const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    console.log(apiKey)
-
     const loader = new CheerioWebBaseLoader(
-      "/scrape"
+      ""
     );
     const data = await loader.load();
 
