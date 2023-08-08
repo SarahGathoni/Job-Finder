@@ -16,7 +16,7 @@ connectDB();
     // Each scraper instance is associated with one browser.
     // Concurrent queries will run on different pages within the same browser instance.
     const scraper = new LinkedinScraper({
-        headless: true,
+        headless: true, //did the magic initially it was off
         slowMo: 200,
         args: [
             "--lang=en-GB",
@@ -34,7 +34,6 @@ connectDB();
     // Emitted once for each processed job
     scraper.on(events.scraper.data, async (data) => {
 
-        console.log("In the zone")
 
         console.log(
             data.description.length,

@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { JobsList } from '../models/model';
 const router = express.Router();
 
 //home route
@@ -12,21 +13,18 @@ router.get("/", async (req: any, res: any) => {
 });
 
 //route to get the data from our database
-// router.get("/retrived-data", async (req: any, res: any) => {
-//     try {
-//         const { data } = req.body
-//         //email and password
-//         //querry the database to find a collection for scrapeddata
-//         const allData = await ScrapedData.find({ data });
+router.get("/scrapper-info", async (req: any, res: any) => {
+    try {
+        
+        //querry the database to find a collection for scrapeddata
+        const allData = await JobsList.find().lean();
 
-//         res.send({ message: "successfully retrieved the data", data: data })
+        res.send({ message: "successfully retrieved the data", data: allData })
 
-
-
-//     } catch (error) {
-//         console.log("Unable to retrived-data", error)
-//     }
-// });
+    } catch (error) {
+        console.log("Unable to retrived-data", error)
+    }
+});
 
 
 
