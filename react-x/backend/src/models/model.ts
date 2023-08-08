@@ -1,20 +1,19 @@
 import { Schema, model } from "mongoose";
 
-interface IJobScrapedData {
-    location: string,
+interface IDataScraped {
+    location: string ,
     jobId: number,
     company: string,
     title?: string,
-    companyLink?: string,
-    companyImgLink: string,
-    place: string,
+    companyLink?: string | undefined,
+    companyImgLink: string| undefined,
+    place: string | undefined,
     date: Date,
-    link: string,
-    applyLink: string,
-    insights: string
+    link: string | undefined,
+    applyLink: string | undefined,
 }
 
-const jobSchema = new Schema<IJobScrapedData>(
+const jobSchema = new Schema<IDataScraped>(
     {
         location: {
             type: String,
@@ -28,34 +27,26 @@ const jobSchema = new Schema<IJobScrapedData>(
             type: String,
             required: true,
         },
+        title: {
+            type: String,
+        },
         companyLink: {
             type: String,
-            required: false,
         }, 
         companyImgLink: {
             type: String,
-            required: false,
         },
         place: {
             type: String,
-            required: false,
         },
         date: {
             type: Date,
-            required: false,
         },
         link: {
             type: String,
-            required: false,
         },
         applyLink: {
             type: String,
-            required: false
-        },
-
-        insights: {
-            type: String,
-            required: false
         },
 
     },
@@ -64,8 +55,7 @@ const jobSchema = new Schema<IJobScrapedData>(
         timestamps: true
     }
 
-
 );
 
 
-export const DappList = model<IJobScrapedData>("DappList", jobSchema)
+export const JobsList = model<IDataScraped>("JobsList", jobSchema)

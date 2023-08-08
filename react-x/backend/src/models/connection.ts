@@ -4,8 +4,9 @@ export const connectDB = async () => {
     try {
        
         await mongoose.connect(process.env.MONGO_DB_URL!, {
-            connectTimeoutMS: 80000,
-            socketTimeoutMS: 80000,
+            connectTimeoutMS: 1000000,
+            socketTimeoutMS: 1000000,
+            bufferCommands: false
 
         });
         console.log(" Connection to the database established successfully");

@@ -1,4 +1,4 @@
-import { 
+import {
     LinkedinScraper,
     relevanceFilter,
     timeFilter,
@@ -7,6 +7,10 @@ import {
     onSiteOrRemoteFilter,
     events,
 } from 'linkedin-jobs-scraper';
+import { JobsList } from '../models/model';
+import { connectDB } from '../models/connection';
+
+connectDB();
 
 (async () => {
     // Each scraper instance is associated with one browser.
@@ -21,14 +25,14 @@ import {
 
     // Add listeners for scraper events
     scraper.on(events.puppeteer.browser.targetcreated, () => {
-        
-     });
+
+    });
     scraper.on(events.puppeteer.browser.targetchanged, () => { });
     scraper.on(events.puppeteer.browser.targetdestroyed, () => { });
     scraper.on(events.puppeteer.browser.disconnected, () => { });
-    
+
     // Emitted once for each processed job
-    scraper.on(events.scraper.data, (data) => {
+    scraper.on(events.scraper.data, async (data) => {
 
         console.log("In the zone")
 
@@ -48,11 +52,45 @@ import {
             `applyLink='${data.applyLink ? data.applyLink : "N/A"}'`,
             `insights='${data.insights}'`,
         );
+
+        const {
+            location,
+            jobId,
+            company,
+            title,
+            companyLink,
+            companyImgLink,
+            place,
+            date,
+            link,
+            applyLink
+         } = data
+
+        //consider saving this data to the database directly when scrapint  
+        const scrapeddata = new JobsList(
+            {
+                location,
+                jobId,
+                company,
+                title,
+                companyLink,
+                companyImgLink,
+                place,
+                date,
+                link,
+                applyLink
+            }
+        ) 
+
+        await scrapeddata.save()
+
+        console.log("Saved to Database", scrapeddata)
+
     });
-    
+
     // Emitted once for each scraped page
     scraper.on(events.scraper.metrics, (metrics) => {
-        console.log(`Processed=${metrics.processed}`, `Failed=${metrics.failed}`, `Missed=${metrics.missed}`);        
+        console.log(`Processed=${metrics.processed}`, `Failed=${metrics.failed}`, `Missed=${metrics.missed}`);
     });
 
     scraper.on(events.scraper.error, (err) => {
@@ -70,7 +108,7 @@ import {
     }
 
     // Run queries concurrently    
-   await Promise.all([
+    await Promise.all([
         // Run queries serially
         scraper.run([
             {
@@ -80,13 +118,13 @@ import {
                     filters: {
                         type: [typeFilter.FULL_TIME, typeFilter.CONTRACT],
                         onSiteOrRemote: [onSiteOrRemoteFilter.REMOTE, onSiteOrRemoteFilter.HYBRID],
-                    },       
-                }                                                       
+                    },
+                }
             },
             {
                 query: "Sales",
-                options: {           
-					pageOffset: 2, // How many pages to skip. Default 0
+                options: {
+                    pageOffset: 2, // How many pages to skip. Default 0
                     limit: 5, // This will override global option limit (33)
                     applyLink: true, // Try to extract apply link. If set to true, scraping is slower because an additional page mus be navigated. Default to false
                     skipPromotedJobs: true, // Skip promoted jobs: Default to false

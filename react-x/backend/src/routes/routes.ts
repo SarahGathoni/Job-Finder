@@ -28,29 +28,6 @@ router.get("/", async (req: any, res: any) => {
 //     }
 // });
 
-//route to post/save data to our database
-// router.post("/scrape-data", async (req: any, res: any) => {
-//     try {
-
-//         //got the scraped data frpm pupeeter
-//         let scrape = await scrappingData()
-//         scrape = req.body
-//         //check if there is data in scrape
-//         if (scrape) {
-             
-//             const saveData = new ScrapedData({
-//                 scrape,
-//             }).save()
-
-//             res.send({
-//                 message: "successfully save to db"
-//             })
-//         }
-
-//     } catch (error) {
-//         console.log("Unable to scrape-data", error)
-//     }
-// })
 
 
 module.exports = router;
