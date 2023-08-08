@@ -1,6 +1,4 @@
 import * as express from 'express';
-import puppeteer from "puppeteer"
-import { scrappingData } from '../scrapping/scrapping';
 const router = express.Router();
 
 //home route
