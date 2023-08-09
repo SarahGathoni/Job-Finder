@@ -1,6 +1,5 @@
 import * as express from 'express';
-import puppeteer from "puppeteer"
-import { scrappingData } from '../scrapping/scrapping';
+import { JobsList } from '../models/model';
 const router = express.Router();
 
 //home route
@@ -14,45 +13,19 @@ router.get("/", async (req: any, res: any) => {
 });
 
 //route to get the data from our database
-// router.get("/retrived-data", async (req: any, res: any) => {
-//     try {
-//         const { data } = req.body
-//         //email and password
-//         //querry the database to find a collection for scrapeddata
-//         const allData = await ScrapedData.find({ data });
+router.get("/scrapper-info", async (req: any, res: any) => {
+    try {
+        
+        //querry the database to find a collection for scrapeddata
+        const allData = await JobsList.find().lean();
 
-//         res.send({ message: "successfully retrieved the data", data: data })
+        res.send({ message: "successfully retrieved the data", data: allData })
 
+    } catch (error) {
+        console.log("Unable to retrived-data", error)
+    }
+});
 
-
-//     } catch (error) {
-//         console.log("Unable to retrived-data", error)
-//     }
-// });
-
-//route to post/save data to our database
-// router.post("/scrape-data", async (req: any, res: any) => {
-//     try {
-
-//         //got the scraped data frpm pupeeter
-//         let scrape = await scrappingData()
-//         scrape = req.body
-//         //check if there is data in scrape
-//         if (scrape) {
-             
-//             const saveData = new ScrapedData({
-//                 scrape,
-//             }).save()
-
-//             res.send({
-//                 message: "successfully save to db"
-//             })
-//         }
-
-//     } catch (error) {
-//         console.log("Unable to scrape-data", error)
-//     }
-// })
 
 
 module.exports = router;
