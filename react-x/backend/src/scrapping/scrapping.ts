@@ -111,9 +111,9 @@ connectDB();
         // Run queries serially
         scraper.run([
             {
-                query: "Blockchain Engineer",
+                query: "FrontEnd Developer",
                 options: {
-                    locations: ["United States", "United Kingdom"], // This will override global options ["Europe"]
+                    locations: ["United Kingdom"], // This will override global options ["Europe"]
                     filters: {
                         type: [typeFilter.FULL_TIME, typeFilter.CONTRACT],
                         onSiteOrRemote: [onSiteOrRemoteFilter.REMOTE, onSiteOrRemoteFilter.HYBRID],
@@ -121,7 +121,7 @@ connectDB();
                 }
             },
             {
-                query: "Sales",
+                query: "Data Science",
                 options: {
                     pageOffset: 2, // How many pages to skip. Default 0
                     limit: 5, // This will override global option limit (33)
@@ -131,7 +131,7 @@ connectDB();
                 }
             },
         ], { // Global options, will be merged individually with each query options
-            locations: ["Europe"],
+            locations: ["Kenya"],
             limit: 5,
         }),
     ]);
