@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { FaUpload } from 'react-icons/fa';
 import FileInput from '../pages/FileInput';
 import { CheerioWebBaseLoader } from "langchain/document_loaders/web/cheerio";
@@ -7,16 +7,39 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { RetrievalQAChain } from "langchain/chains";
 import { ChatOpenAI } from "langchain/chat_models/openai";
+import axios from "axios"
 
 export default function Work() {
   const [res, setRes] = useState('');
+  const [scrapeData, setScrapeData] = useState('');
+ 
+  useEffect(() => {
+    // Define the API endpoint
+    const apiUrl = 'http://localhost:3002/scrapper-info';
+
+    // Fetch data from the API using Axios
+    axios.get(apiUrl)
+      .then(response => {
+        setScrapeData(response.data.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  console.log("SCRAPED DATA", scrapeData)
 
   const openai = async () => {
     const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+    console.log("API KEY", apiKey)
+
     const loader = new CheerioWebBaseLoader(
-      ""
+      scrapeData
     );
     const data = await loader.load();
+
+    console.log("DATA OPEN AI", data)
 
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 200,
@@ -25,12 +48,20 @@ export default function Work() {
 
     const splitDocs = await textSplitter.splitDocuments(data);
 
+
+    console.log("splitDocs", splitDocs)
+
     const embeddings = new OpenAIEmbeddings(apiKey);
+
+    consolelog("embeddings", embeddings)
 
     const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
 
+    console.log("vectorStore", vectorStore)
+    
     const relevantDocs = await vectorStore.similaritySearch("");
-    console.log(relevantDocs.length);
+
+    console.log("QUERRY HERE",relevantDocs.length);
 
     const model = new ChatOpenAI({ modelName: "GPT-4"});
     const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever());
