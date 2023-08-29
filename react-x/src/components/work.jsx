@@ -30,7 +30,8 @@ export default function Work() {
   console.log("SCRAPED DATA", scrapeData)
 
   const openai = async () => {
-    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+    const apiKey = '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'//import.meta.env.VITE_OPENAI_API_KEY;
+    //const configs = import.meta.env.configuration
 
     console.log("API KEY", apiKey)
 
@@ -63,7 +64,7 @@ export default function Work() {
 
     console.log("QUERRY HERE",relevantDocs.length);
 
-    const model = new ChatOpenAI({ modelName: "GPT-4"});
+    const model = new ChatOpenAI({ modelName: "gpt-3.5-turbo"});
     const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever());
 
     const response = await chain.call({
