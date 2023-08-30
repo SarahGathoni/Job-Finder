@@ -7,6 +7,8 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { RetrievalQAChain } from "langchain/chains";
 import { ChatOpenAI } from "langchain/chat_models/openai";
+//import {HNSWLib} from "langchain/vectorstores";
+//import {TextLoader} from "langchain/document_loaders"
 import axios from "axios"
 
 export default function Work() {
@@ -30,7 +32,7 @@ export default function Work() {
   console.log("SCRAPED DATA", scrapeData)
 
   const openai = async () => {
-    const apiKey = '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'//import.meta.env.VITE_OPENAI_API_KEY;
+    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
     //const configs = import.meta.env.configuration
 
     console.log("API KEY", apiKey)
@@ -52,11 +54,12 @@ export default function Work() {
 
     console.log("splitDocs", splitDocs)
 
-    const embeddings = new OpenAIEmbeddings(apiKey);
+    //const embeddings = new OpenAIEmbeddings(apiKey);
 
-    consolelog("embeddings", embeddings)
+    console.log("embeddings")
 
-    const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
+    const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, new OpenAIEmbeddings());
+    console.log('got the api key')
 
     console.log("vectorStore", vectorStore)
     
