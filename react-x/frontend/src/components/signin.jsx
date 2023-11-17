@@ -70,7 +70,7 @@ export default function Signin(){
         Sign in
       </Link>
       <p className="text-gray-600 text-sm text-center mt-4">
-        No account? <Link to="/Signup" href="#!" className="text-indigo-500 font-semibold">Sign up</Link>
+        No account? <Link to="/Work" href="#!" className="text-indigo-500 font-semibold">Sign up</Link>
       </p>
     </form>
   

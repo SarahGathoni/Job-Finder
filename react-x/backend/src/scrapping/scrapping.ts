@@ -117,6 +117,7 @@ connectDB();
                     filters: {
                         type: [typeFilter.FULL_TIME, typeFilter.CONTRACT],
                         onSiteOrRemote: [onSiteOrRemoteFilter.REMOTE, onSiteOrRemoteFilter.HYBRID],
+                    
                     },
                 }
             },
@@ -130,9 +131,19 @@ connectDB();
                     descriptionFn: descriptionFn, // Custom job description processor [optional]
                 }
             },
+            {
+                query: "Procurement officer",
+                options: {
+                    pageOffset: 2, // How many pages to skip. Default 0
+                    limit: 5, // This will override global option limit (33)
+                    applyLink: true, // Try to extract apply link. If set to true, scraping is slower because an additional page mus be navigated. Default to false
+                    skipPromotedJobs: true, // Skip promoted jobs: Default to false
+                    descriptionFn: descriptionFn, // Custom job description processor [optional]
+                } 
+            }
         ], { // Global options, will be merged individually with each query options
-            locations: ["Kenya"],
-            limit: 5,
+            locations: ["Kenya", "USA"],
+            limit: 30,
         }),
     ]);
 
